@@ -18,20 +18,7 @@ class DashboardApp extends StatelessWidget {
   }
 }
 
-class DashboardScreen extends StatefulWidget {
-  @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
+class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,8 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: 0,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.arrow_back),
@@ -120,13 +106,14 @@ class DashboardItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
+        color: Colors.lightBlueAccent,  // Set the background color to sky blue
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset(
               imageAsset,
               width: 48.0,
-              height: 100.0,
+              height: 48.0,
             ),
             SizedBox(height: 8.0),
             Text(title, style: TextStyle(fontSize: 18.0)),
