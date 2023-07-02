@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smart_waste_management/dustbinDetailPage.dart';
 
-void main() {
-  runApp(DashboardApp());
-}
+Color darkBlueColor = Color(0xFF000080);
 
 class DashboardApp extends StatelessWidget {
   @override
@@ -11,7 +10,7 @@ class DashboardApp extends StatelessWidget {
       title: 'Dashboard',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.blue,
+        scaffoldBackgroundColor: darkBlueColor,
       ),
       home: DashboardScreen(),
     );
@@ -22,6 +21,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: Text('Dashboard'),
       ),
@@ -32,37 +32,37 @@ class DashboardScreen extends StatelessWidget {
           DashboardItem(
             title: 'Dustbin 1',
             icon: Icons.delete,
-            imageAsset: 'assets/dustbin1.png',
+            imageAsset: 'assets/Red_dustbin.png',
             onTap: () {
               // Navigate to the existing page
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ExistingPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => dustbinDetailPage()));
             },
           ),
           DashboardItem(
             title: 'Dustbin 2',
             icon: Icons.delete,
-            imageAsset: 'assets/dustbin2.png',
+            imageAsset: 'assets/green_dustbin.png',
             onTap: () {
               // Navigate to the existing page
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ExistingPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => dustbinDetailPage()));
             },
           ),
           DashboardItem(
             title: 'Dustbin 3',
             icon: Icons.delete,
-            imageAsset: 'assets/dustbin3.png',
+            imageAsset: 'assets/blue_dustbin.png',
             onTap: () {
               // Navigate to the existing page
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ExistingPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => dustbinDetailPage()));
             },
           ),
           DashboardItem(
             title: 'Dustbin 4',
             icon: Icons.delete,
-            imageAsset: 'assets/dustbin4.png',
+            imageAsset: 'assets/yellow_dustbin.png',
             onTap: () {
               // Navigate to the existing page
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ExistingPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => dustbinDetailPage()));
             },
           ),
         ],
@@ -124,16 +124,3 @@ class DashboardItem extends StatelessWidget {
   }
 }
 
-class ExistingPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Existing Page'),
-      ),
-      body: Center(
-        child: Text('This is an existing page.'),
-      ),
-    );
-  }
-}

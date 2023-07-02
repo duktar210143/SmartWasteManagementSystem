@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_waste_management/dustbinDetailPage.dart';
 
-import 'landingpage.dart';
+import 'package:smart_waste_management/dashboard.dart';
+import 'package:smart_waste_management/landingpage.dart';
+
 
 void main() {
   runApp(Smartdustbin());
@@ -12,9 +14,9 @@ class Smartdustbin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: dustbinDetailPage(),
+      home: landingpage(),
     );
   }
 }
