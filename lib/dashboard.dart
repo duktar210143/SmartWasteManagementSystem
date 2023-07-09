@@ -4,6 +4,8 @@ import 'package:smart_waste_management/dustbinDetailPage.dart';
 Color darkBlueColor = Color(0xFF000080);
 
 class DashboardApp extends StatelessWidget {
+   DashboardApp({super.key,Key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

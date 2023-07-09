@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    package="com.example.smart_waste_management"
+      <!-- Add the uses-permission tag here -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:label="smart_waste_management"
         android:name="${applicationName}"

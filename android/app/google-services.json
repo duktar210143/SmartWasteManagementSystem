@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "573875158911",
+    "firebase_url": "https://smartwastemanagementsyst-da183-default-rtdb.firebaseio.com",
+    "project_id": "smartwastemanagementsyst-da183",
+    "storage_bucket": "smartwastemanagementsyst-da183.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573875158911:android:c3f2d22d41efbfdf53244a",
+        "android_client_info": {
+          "package_name": "com.example.smart_waste_management"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573875158911-icqp6io85beqp6oml9219ceqee0pfsm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8mHL3U9t8gHrX6Zo07y7Esozd7VOUbyg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "573875158911-icqp6io85beqp6oml9219ceqee0pfsm0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "573875158911-4kkteo5qrf7dg44a1bmc82d0bt6j1bcd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartWasteManagement.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_waste_management/dashboard.dart';
+import 'package:smart_waste_management/dustbinDetailPage.dart';
 import 'package:smart_waste_management/trashbinPage.dart';
+import 'package:smart_waste_management/dashboard.dart';
 
 Color darkBlueColor = Color(0xFF000080);
 
@@ -64,6 +66,7 @@ class landingpage extends StatelessWidget {
                       ),
                     );
                   },
+                  // onPressed: DashboardApp,
                   child: const Text("Get Started"),
                 )
               ],
