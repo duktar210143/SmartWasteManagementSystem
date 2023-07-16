@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_waste_management/dustbinDetailPage.dart';
 
-import 'landingpage.dart';
+
 
 void main() {
   runApp(Smartdustbin());
