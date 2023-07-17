@@ -39,6 +39,15 @@ class _aboutUSState extends State<aboutUS> {
             style: TextStyle(color: Colors.green),
           ),
         ),
+           leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.green,
+            ),
+            onPressed: () {
+              Navigator.pop(context); // Navigate back when the arrow icon is clicked
+            },
+          ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
