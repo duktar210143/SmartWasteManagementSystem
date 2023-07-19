@@ -125,7 +125,7 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
                         middle_text("The sensors in the dustbin"),
                         middle_text("will notify you on how full"),
                         middle_text("it is and also throw an alert"),
-                        middle_text("when the trash fill is over 75%")
+                        middle_text("when the trash fill is over 90%")
                       ],
                     ),
                   ),

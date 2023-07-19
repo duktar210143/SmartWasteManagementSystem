@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:smart_waste_management/aboutUs.dart';
 import 'package:smart_waste_management/dustbinDetailPage.dart';
+import 'package:smart_waste_management/landingpage.dart';
 
 Color darkBlueColor = Color(0xFF000080);
 
 class DashboardApp extends StatelessWidget {
-   DashboardApp({super.key,Key});
+  DashboardApp({super.key, Key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dashboard',
+      title: 'Trash track',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: darkBlueColor,
@@ -25,7 +27,12 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: Center(
+          child: Padding(
+            padding: EdgeInsets.only(right: 93),
+            child: Text('Trash Track')),
+        ),
+        foregroundColor: const Color.fromARGB(255, 10, 107, 13),
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -37,7 +44,8 @@ class DashboardScreen extends StatelessWidget {
             imageAsset: 'assets/Red_dustbin.png',
             onTap: () {
               // Navigate to the existing page
-              Navigator.push(context, MaterialPageRoute(builder: (context) => dustbinDetailPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => dustbinDetailPage()));
             },
           ),
           DashboardItem(
@@ -46,7 +54,8 @@ class DashboardScreen extends StatelessWidget {
             imageAsset: 'assets/green_dustbin.png',
             onTap: () {
               // Navigate to the existing page
-              Navigator.push(context, MaterialPageRoute(builder: (context) => dustbinDetailPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => dustbinDetailPage()));
             },
           ),
           DashboardItem(
@@ -55,7 +64,8 @@ class DashboardScreen extends StatelessWidget {
             imageAsset: 'assets/blue_dustbin.png',
             onTap: () {
               // Navigate to the existing page
-              Navigator.push(context, MaterialPageRoute(builder: (context) => dustbinDetailPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => dustbinDetailPage()));
             },
           ),
           DashboardItem(
@@ -64,13 +74,32 @@ class DashboardScreen extends StatelessWidget {
             imageAsset: 'assets/yellow_dustbin.png',
             onTap: () {
               // Navigate to the existing page
-              Navigator.push(context, MaterialPageRoute(builder: (context) => dustbinDetailPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => dustbinDetailPage()));
             },
           ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
+        onTap: (index) {
+          if (index == 1) {
+            // navigate to another page
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => aboutUS(),
+              ),
+            );
+          } else if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => landingpage(),
+              ),
+            );
+          }
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.arrow_back),
@@ -108,7 +137,7 @@ class DashboardItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        color: Colors.lightBlueAccent,  // Set the background color to sky blue
+        color: Colors.lightBlueAccent, // Set the background color to sky blue
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -118,11 +147,13 @@ class DashboardItem extends StatelessWidget {
               height: 48.0,
             ),
             SizedBox(height: 8.0),
-            Text(title, style: TextStyle(fontSize: 18.0)),
+            Text(
+              title,
+              style: TextStyle(fontSize: 18.0),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
