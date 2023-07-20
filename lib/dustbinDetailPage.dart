@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'motorControll.dart';
 
 Color darkBlueColor = Color(0xFF000080);
 
 class dustbinDetailPage extends StatefulWidget {
   const dustbinDetailPage({super.key});
+  
 
   @override
   State<dustbinDetailPage> createState() => _dustbinDetailPageState();
 }
 
 class _dustbinDetailPageState extends State<dustbinDetailPage> {
+  MotorControlScreen motorControlScreenInstance = MotorControlScreen();
   double progress = 0;
   final DatabaseReference databaseRef =
       FirebaseDatabase.instance.ref().child('sensor_data');
@@ -149,7 +152,7 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
                           height: 90,
                           width: 90,
                           child: FloatingActionButton(
-                            onPressed: () {},
+                            onPressed: motorControlScreenInstance.openMotor,
                             child: Text(
                               "OPEN",
                               style: TextStyle(fontSize: 23),
