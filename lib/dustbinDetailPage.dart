@@ -7,7 +7,6 @@ Color darkBlueColor = Color(0xFF000080);
 
 class dustbinDetailPage extends StatefulWidget {
   const dustbinDetailPage({super.key});
-  
 
   @override
   State<dustbinDetailPage> createState() => _dustbinDetailPageState();
@@ -16,6 +15,19 @@ class dustbinDetailPage extends StatefulWidget {
 class _dustbinDetailPageState extends State<dustbinDetailPage> {
   MotorControlScreen motorControlScreenInstance = MotorControlScreen();
   double progress = 0;
+  bool isMotorOpen = true;
+
+  void toggleMotorState() {
+    if (isMotorOpen) {
+      motorControlScreenInstance.openMotor();
+    } else {
+      motorControlScreenInstance.closeMotor();
+    }
+    setState(() {
+      isMotorOpen = !isMotorOpen;
+    });
+  }
+
   final DatabaseReference databaseRef =
       FirebaseDatabase.instance.ref().child('sensor_data');
 
@@ -152,9 +164,10 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
                           height: 90,
                           width: 90,
                           child: FloatingActionButton(
-                            onPressed: motorControlScreenInstance.openMotor,
+                            onPressed: toggleMotorState,
+                            backgroundColor: isMotorOpen ? Colors.blue:Colors.red,
                             child: Text(
-                              "OPEN",
+                              isMotorOpen ? "OPEN":"Close",
                               style: TextStyle(fontSize: 23),
                             ),
                           ),
