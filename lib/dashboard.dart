@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smart_waste_management/aboutUs.dart';
 import 'package:smart_waste_management/dustbinDetailPage.dart';
+import 'package:smart_waste_management/dustbinpageB.dart';
 import 'package:smart_waste_management/landingpage.dart';
 
-Color darkBlueColor = Color(0xFF000080);
+Color darkBlueColor = Colors.green;
 
 class DashboardApp extends StatelessWidget {
   DashboardApp({super.key, Key});
@@ -55,7 +56,7 @@ class DashboardScreen extends StatelessWidget {
             onTap: () {
               // Navigate to the existing page
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => dustbinDetailPage()));
+                  MaterialPageRoute(builder: (context) => dustbinpageB()));
             },
           ),
           DashboardItem(
