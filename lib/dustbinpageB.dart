@@ -4,7 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'motorControll.dart';
 
 
-Color darkBlueColor = Colors.green;
+Color darkBlueColor = Colors.black12;
 
 class dustbinpageB extends StatefulWidget {
   const dustbinpageB({super.key});

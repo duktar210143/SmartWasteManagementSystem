@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'motorControll.dart';
 
-Color darkBlueColor = Color(0xFF000080);
+Color darkBlueColor = Colors.green;
 
 class dustbinDetailPage extends StatefulWidget {
   const dustbinDetailPage({super.key});
