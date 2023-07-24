@@ -40,6 +40,8 @@ dependencies:
   firebase_database: ^10.2.3
   flutter_local_notifications: ^15.1.0+1
   youtube_player_flutter: ^8.1.2
+  flat_3d_button: ^1.0.3
+  neumorphic_button: ^0.0.1+2
 
   
 
