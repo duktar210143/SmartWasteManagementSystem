@@ -3,26 +3,26 @@ import 'package:http/http.dart' as http;
 
 const String arduinoIP = "192.168.137.104"; // Replace with your Arduino's IP address
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
-class MyApp extends StatelessWidget {
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Motor Control App',
+//       home: ButtonControl(),
+//     );
+//   }
+// }
+
+class ButtonControl extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Motor Control App',
-      home: MyHomePage(),
-    );
-  }
+  _ButtonControlState createState() => _ButtonControlState();
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _ButtonControlState extends State<ButtonControl> {
   bool _isOpen = false;
 
   Future<void> _sendRequest(bool isOpen) async {

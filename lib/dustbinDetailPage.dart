@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'motorControll.dart';
+import 'package:http/http.dart' as http;
 
+const String arduinoIP = "192.168.137.104"; // Replace with your Arduino's IP address
 Color darkBlueColor = Colors.green;
 
 class dustbinDetailPage extends StatefulWidget {
@@ -13,20 +14,9 @@ class dustbinDetailPage extends StatefulWidget {
 }
 
 class _dustbinDetailPageState extends State<dustbinDetailPage> {
-  MotorControlScreen motorControlScreenInstance = MotorControlScreen();
   double progress = 0;
-  bool isMotorOpen = true;
+  bool _isOpen = false;
 
-  void toggleMotorState() {
-    if (isMotorOpen) {
-      motorControlScreenInstance.openMotor();
-    } else {
-      motorControlScreenInstance.closeMotor();
-    }
-    setState(() {
-      isMotorOpen = !isMotorOpen;
-    });
-  }
 
   final DatabaseReference databaseRef =
       FirebaseDatabase.instance.ref().child('sensor_data');
@@ -47,6 +37,29 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
         InitializationSettings(android: initializationSettingsAndroid);
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+   Future<void> _sendRequest(bool isOpen) async {
+    try {
+      if (isOpen) {
+        print("Open request sent.");
+        await http.get(Uri.http(arduinoIP, "/open"));
+        print("Open request sent.");
+      } else {
+         print("Close request sent.");
+        await http.get(Uri.http(arduinoIP, "/close"));
+        print("Close request sent.");
+      }
+    } catch (e) {
+      print("Error sending request: $e");
+    }
+  }
+
+  void toggleMotorState() {
+    setState(() {
+      _isOpen = !_isOpen;
+      _sendRequest(_isOpen);
+    });
   }
 
   @override
@@ -164,13 +177,14 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
                           height: 90,
                           width: 90,
                           child: FloatingActionButton(
-                            onPressed: toggleMotorState,
-                            backgroundColor: isMotorOpen ? Colors.blue:Colors.red,
-                            child: Text(
-                              isMotorOpen ? "OPEN":"Close",
-                              style: TextStyle(fontSize: 23),
-                            ),
+                          onPressed: toggleMotorState,
+                          backgroundColor:
+                              _isOpen ? Colors.blue : Colors.red,
+                          child: Text(
+                            _isOpen ? "OPEN" : "CLOSE",
+                            style: TextStyle(fontSize: 23),
                           ),
+                        ),
                         ),
                       ],
                     ),
