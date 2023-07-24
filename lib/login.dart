@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_waste_management/dashboard.dart';
-import 'package:smart_waste_management/resetPass.dart';
+import 'dashboard.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -10,12 +9,55 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
-  //Password Field obscureText  Handler
+  // Password Field obscureText  Handler
   bool _isHidden = true;
   void _toggleVisibility() {
     setState(() {
       _isHidden = !_isHidden;
     });
+  }
+
+  // Declare email and password variables
+  final String expectedEmail = "user1@email.com";
+  final String expectedPassword = "password123";
+
+  // Create controllers to capture user input
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  // Method to handle login
+  void _handleLogin() {
+    // Get the entered values from the text controllers
+    String enteredEmail = emailController.text.trim();
+    String enteredPassword = passwordController.text.trim();
+
+    // Check if entered values match the expected email and password
+    if (enteredEmail == expectedEmail && enteredPassword == expectedPassword) {
+      // If the login is successful, navigate to the dashboard page
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DashboardApp()),
+      );
+    } else {
+      // If login fails, show an error message (you can display a Snackbar or Dialog)
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Login Failed"),
+            content: Text("Invalid email or password."),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -67,8 +109,7 @@ class _MyLoginState extends State<MyLogin> {
                           'LOGIN',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white.withOpacity(
-                                0.2), // Adjust the opacity as desired
+                            color: Colors.white.withOpacity(0.2),
                             fontSize: 40.0,
                           ),
                         ),
@@ -87,6 +128,7 @@ class _MyLoginState extends State<MyLogin> {
                   child: Column(
                     children: [
                       TextField(
+                        controller: emailController, // Use the email controller to capture user input
                         decoration: InputDecoration(
                           labelText: 'Email',
                           prefixIcon: Icon(Icons.email_outlined),
@@ -99,6 +141,7 @@ class _MyLoginState extends State<MyLogin> {
                       ),
                       SizedBox(height: 30.0),
                       TextFormField(
+                        controller: passwordController, // Use the password controller to capture user input
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter the password';
@@ -106,7 +149,7 @@ class _MyLoginState extends State<MyLogin> {
                             return 'Password must be greater than 6 digits';
                           }
                         },
-                        obscureText: true,
+                        obscureText: _isHidden, // Use the _isHidden variable to toggle password visibility
                         decoration: InputDecoration(
                           labelText: 'Password',
                           fillColor: Colors.grey.shade100,
@@ -118,7 +161,6 @@ class _MyLoginState extends State<MyLogin> {
                                 : Icon(Icons.visibility_off),
                           ),
                           filled: true,
-                          // hintText: 'Password',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -129,28 +171,20 @@ class _MyLoginState extends State<MyLogin> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                maximumSize: Size(170.0, 90.0),
-                                minimumSize: Size(170.0, 60.0),
-                                primary: Colors.black,
-                                shape: StadiumBorder(),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DashboardScreen(),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .center, // Set alignment to start
-                                //crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text('LOG IN'),
-                                ],
-                              )),
+                            style: ElevatedButton.styleFrom(
+                              maximumSize: Size(170.0, 90.0),
+                              minimumSize: Size(170.0, 60.0),
+                              primary: Colors.black,
+                              shape: StadiumBorder(),
+                            ),
+                            onPressed: _handleLogin, // Call _handleLogin when the login button is pressed
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('LOG IN'),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 30.0),
@@ -159,12 +193,7 @@ class _MyLoginState extends State<MyLogin> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => resetPassword(),
-                                ),
-                              );
+                              Navigator.pushNamed(context, 'forgot');
                             },
                             child: Text(
                               'Forgot password?',
@@ -172,6 +201,7 @@ class _MyLoginState extends State<MyLogin> {
                             ),
                           ),
                         ],
+
                       ),
                     ],
                   ),
