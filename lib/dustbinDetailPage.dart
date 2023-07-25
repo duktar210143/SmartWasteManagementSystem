@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
-const String arduinoIP = "192.168.137.104"; // Replace with your Arduino's IP address
+const String arduinoIP =
+    "192.168.137.104"; // Replace with your Arduino's IP address
 Color darkBlueColor = Colors.green;
 
 class dustbinDetailPage extends StatefulWidget {
@@ -16,7 +18,6 @@ class dustbinDetailPage extends StatefulWidget {
 class _dustbinDetailPageState extends State<dustbinDetailPage> {
   double progress = 0;
   bool _isOpen = false;
-
 
   final DatabaseReference databaseRef =
       FirebaseDatabase.instance.ref().child('sensor_data');
@@ -39,16 +40,20 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-   Future<void> _sendRequest(bool isOpen) async {
+  Future<void> _sendRequest(bool isOpen) async {
     try {
       if (isOpen) {
         print("Open request sent.");
         await http.get(Uri.http(arduinoIP, "/open"));
         print("Open request sent.");
       } else {
-         print("Close request sent.");
+        print("Close request sent.");
         await http.get(Uri.http(arduinoIP, "/close"));
         print("Close request sent.");
+      }
+      // Check if progress is over 90% and show the notification
+      if (progress > 90) {
+        _showNotification();
       }
     } catch (e) {
       print("Error sending request: $e");
@@ -177,14 +182,13 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
                           height: 90,
                           width: 90,
                           child: FloatingActionButton(
-                          onPressed: toggleMotorState,
-                          backgroundColor:
-                              _isOpen ? Colors.blue : Colors.red,
-                          child: Text(
-                            _isOpen ? "OPEN" : "CLOSE",
-                            style: TextStyle(fontSize: 23),
+                            onPressed: toggleMotorState,
+                            backgroundColor: _isOpen ? Colors.blue : Colors.red,
+                            child: Text(
+                              _isOpen ? "OPEN" : "CLOSE",
+                              style: TextStyle(fontSize: 23),
+                            ),
                           ),
-                        ),
                         ),
                       ],
                     ),
@@ -276,5 +280,17 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
       'The trash fill is over 90% please collect the waste',
       platformChannelSpecifics,
     );
+    // Format the current date and time
+    String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String formattedTime = DateFormat('HH:mm').format(DateTime.now());
+    String formattedDateTime = '$formattedDate" time: "$formattedTime';
+
+    // Save the formatted date and time to the Firebase Realtime Database
+    DatabaseReference dateRef =
+        FirebaseDatabase.instance.ref().child('dustbin_fill_date_time_data');
+    await dateRef.push().set({
+      'dateTime': formattedDateTime,
+      'message': 'Dustbin fill over 90% at this time and date',
+    });
   }
 }
