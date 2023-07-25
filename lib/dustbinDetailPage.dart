@@ -75,134 +75,146 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
       backgroundColor: darkBlueColor,
       appBar: appbar(),
       // body
-      body: StreamBuilder<DatabaseEvent>(
-          stream: databaseRef.onValue,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              DataSnapshot? dataSnapshot = snapshot.data!.snapshot;
-              dynamic fetchedData = dataSnapshot.value;
-              print(fetchedData);
-              progress = fetchedData?.toDouble() ?? 0;
-              if (progress > 90) {
-                _showNotification();
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/greenbg.jpeg"),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: StreamBuilder<DatabaseEvent>(
+            stream: databaseRef.onValue,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                DataSnapshot? dataSnapshot = snapshot.data!.snapshot;
+                dynamic fetchedData = dataSnapshot.value;
+                print(fetchedData);
+                progress = fetchedData?.toDouble() ?? 0;
+                if (progress > 90) {
+                  _showNotification();
+                }
+                // process the retrived data
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 50, left: 30),
+                      child: Row(
+                        children: [
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              SizedBox(
+                                height: 160,
+                                width: 160,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  value: progress.toDouble() / 100,
+                                  // Set the current progress value
+                                  strokeWidth:
+                                      8, // Adjust the thickness of the progress indicator
+                                ),
+                              ),
+                              Text(
+                                '${(progress).toInt()}%',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 30),
+                            child: Title(
+                              color: Colors.white,
+                              child: const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Dustbin A",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Location: Patan durbar",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 70,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          middle_text("The sensors in the dustbin"),
+                          middle_text("will notify you on how full"),
+                          middle_text("it is and also throw an alert"),
+                          middle_text("when the trash fill is over 90%")
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 200,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            height: 90,
+                            width: 90,
+                            child: Opacity(
+                              opacity: 0.6,
+                              child: Image.asset("assets/dustbinIcon.png"),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            height: 90,
+                            width: 90,
+                            child: FloatingActionButton(
+                              onPressed: toggleMotorState,
+                              backgroundColor:
+                                  _isOpen ? Colors.blue : Colors.red,
+                              child: Text(
+                                _isOpen ? "OPEN" : "CLOSE",
+                                style: TextStyle(fontSize: 23),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-              // process the retrived data
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 50, left: 30),
-                    child: Row(
-                      children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            SizedBox(
-                              height: 160,
-                              width: 160,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                value: progress.toDouble() / 100,
-                                // Set the current progress value
-                                strokeWidth:
-                                    8, // Adjust the thickness of the progress indicator
-                              ),
-                            ),
-                            Text(
-                              '${(progress).toInt()}%',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 30),
-                          child: Title(
-                            color: Colors.white,
-                            child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Dustbin A",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  "Location: Patan durbar",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        middle_text("The sensors in the dustbin"),
-                        middle_text("will notify you on how full"),
-                        middle_text("it is and also throw an alert"),
-                        middle_text("when the trash fill is over 90%")
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 200,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          height: 90,
-                          width: 90,
-                          child: Image.asset("assets/dustbinIcon.png"),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          height: 90,
-                          width: 90,
-                          child: FloatingActionButton(
-                            onPressed: toggleMotorState,
-                            backgroundColor: _isOpen ? Colors.blue : Colors.red,
-                            child: Text(
-                              _isOpen ? "OPEN" : "CLOSE",
-                              style: TextStyle(fontSize: 23),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }),
+            }),
+      ),
     );
   }
 

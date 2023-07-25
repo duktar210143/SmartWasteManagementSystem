@@ -3,7 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'motorControll.dart';
 
-
 Color darkBlueColor = Colors.black12;
 
 class dustbinpageB extends StatefulWidget {
@@ -14,7 +13,6 @@ class dustbinpageB extends StatefulWidget {
 }
 
 class _dustbinpageBState extends State<dustbinpageB> {
-
 // changing the state of dustbin from open to close and vice versa
   MotorControlScreen motorControlScreenInstance = MotorControlScreen();
   double progress = 0;
@@ -61,134 +59,146 @@ class _dustbinpageBState extends State<dustbinpageB> {
       backgroundColor: darkBlueColor,
       appBar: appbar(),
       // body
-      body: StreamBuilder<DatabaseEvent>(
-          stream: databaseRef.onValue,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              DataSnapshot? dataSnapshot = snapshot.data!.snapshot;
-              dynamic fetchedData = dataSnapshot.value;
-              print(fetchedData);
-              progress = fetchedData?.toDouble() ?? 0;
-              if (progress > 90) {
-                _showNotification();
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/white.jpg"),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: StreamBuilder<DatabaseEvent>(
+            stream: databaseRef.onValue,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                DataSnapshot? dataSnapshot = snapshot.data!.snapshot;
+                dynamic fetchedData = dataSnapshot.value;
+                print(fetchedData);
+                progress = fetchedData?.toDouble() ?? 0;
+                if (progress > 90) {
+                  _showNotification();
+                }
+                // process the retrived data
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 50, left: 30),
+                      child: Row(
+                        children: [
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              SizedBox(
+                                height: 160,
+                                width: 160,
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                  value: progress.toDouble() / 100,
+                                  // Set the current progress value
+                                  strokeWidth:
+                                      8, // Adjust the thickness of the progress indicator
+                                ),
+                              ),
+                              Text(
+                                '${(progress).toInt()}%',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 30),
+                            child: Title(
+                              color: Colors.black,
+                              child: const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Dustbin B",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Location: basantapur",
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 15),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 70,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          middle_text("The sensors in the dustbin"),
+                          middle_text("will notify you on how full"),
+                          middle_text("it is and also throw an alert"),
+                          middle_text("when the trash fill is over 90%")
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 200,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            height: 90,
+                            width: 90,
+                            child: Opacity(
+                              opacity: 0.7,
+                              child: Image.asset("assets/dustbinIcon.png"),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            height: 90,
+                            width: 90,
+                            child: FloatingActionButton(
+                              onPressed: toggleMotorState,
+                              backgroundColor:
+                                  isMotorOpen ? Colors.blue : Colors.red,
+                              child: Text(
+                                isMotorOpen ? "OPEN" : "Close",
+                                style: TextStyle(fontSize: 23),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-              // process the retrived data
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 50, left: 30),
-                    child: Row(
-                      children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            SizedBox(
-                              height: 160,
-                              width: 160,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                value: progress.toDouble() / 100,
-                                // Set the current progress value
-                                strokeWidth:
-                                    8, // Adjust the thickness of the progress indicator
-                              ),
-                            ),
-                            Text(
-                              '${(progress).toInt()}%',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 30),
-                          child: Title(
-                            color: Colors.white,
-                            child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Dustbin B",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  "Location: basantapur",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 70,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        middle_text("The sensors in the dustbin"),
-                        middle_text("will notify you on how full"),
-                        middle_text("it is and also throw an alert"),
-                        middle_text("when the trash fill is over 90%")
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 200,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          height: 90,
-                          width: 90,
-                          child: Image.asset("assets/dustbinIcon.png"),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          height: 90,
-                          width: 90,
-                          child: FloatingActionButton(
-                            onPressed: toggleMotorState,
-                            backgroundColor: isMotorOpen ? Colors.blue:Colors.red,
-                            child: Text(
-                              isMotorOpen ? "OPEN":"Close",
-                              style: TextStyle(fontSize: 23),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }),
+            }),
+      ),
     );
   }
 
@@ -197,7 +207,7 @@ class _dustbinpageBState extends State<dustbinpageB> {
     return Text(
       text,
       style: TextStyle(
-          fontSize: 18, color: Colors.white, fontWeight: FontWeight.w500),
+          fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500),
     );
   }
 
@@ -235,7 +245,7 @@ class _dustbinpageBState extends State<dustbinpageB> {
   Widget info_text(String text) {
     return Text(
       text,
-      style: TextStyle(fontSize: 18, color: Colors.white),
+      style: TextStyle(fontSize: 18, color: Colors.black),
     );
   }
 
