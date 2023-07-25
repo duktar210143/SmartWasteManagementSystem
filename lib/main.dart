@@ -43,7 +43,7 @@ class Smartdustbin extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: aboutUS(),
+      home: landingpage(),
     );
   }
 }
