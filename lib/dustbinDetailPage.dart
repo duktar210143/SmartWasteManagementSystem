@@ -60,13 +60,6 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
     }
   }
 
-  void toggleMotorState() {
-    setState(() {
-      _isOpen = !_isOpen;
-      _sendRequest(_isOpen);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // fetchData();
@@ -192,7 +185,10 @@ class _dustbinDetailPageState extends State<dustbinDetailPage> {
                             height: 90,
                             width: 90,
                             child: FloatingActionButton(
-                              onPressed: toggleMotorState,
+                              onPressed: () {
+                                _isOpen = !_isOpen;
+                                _sendRequest(_isOpen);
+                              },
                               backgroundColor:
                                   _isOpen ? Colors.blue : Colors.red,
                               child: Text(
