@@ -273,7 +273,7 @@ class _dustbinpageBState extends State<dustbinpageB> {
     await flutterLocalNotificationsPlugin.show(
       0,
       'Dustbin filled',
-      'The trash fill is over 90% please collect the waste',
+      'The trash fill is over 90% in dustbin B please collect the waste ',
       platformChannelSpecifics,
     );
   }
